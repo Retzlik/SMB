@@ -1,0 +1,274 @@
+{
+  "Nav": {
+    "whatKarlDoes": "What Karl does",
+    "industries": "Industries",
+    "pricing": "Pricing",
+    "logIn": "Log in",
+    "seeYourReport": "See your report"
+  },
+  "Footer": {
+    "tagline": "Your AI marketing director.",
+    "company": "Authoricy AB · Stockholm",
+    "product": "Product",
+    "industries": "Industries",
+    "company_col": "Company",
+    "links": {
+      "whatKarlDoes": "What Karl does",
+      "pricing": "Pricing",
+      "seeYourReport": "See your report",
+      "logIn": "Log in",
+      "healthcare": "Healthcare",
+      "professionalServices": "Professional services",
+      "homeServices": "Home services",
+      "automotive": "Automotive",
+      "about": "About",
+      "blog": "Blog",
+      "privacy": "Privacy",
+      "terms": "Terms"
+    },
+    "copyright": "© 2026 Authoricy AB"
+  },
+  "ReportInput": {
+    "placeholder": "Enter your business name or website",
+    "button": "See your report →"
+  },
+  "HomePage": {
+    "hero": {
+      "headline": "You run the business.",
+      "headlineItalic": "Karl grows it.",
+      "subhead": "Karl is your AI marketing director. He brings his own team — review management, local SEO, receptionist, social media, Google Ads, campaigns — and runs your entire digital presence. You just run your business.",
+      "trustLine": "From €299/month · No contracts · GDPR-native · Built in Stockholm"
+    },
+    "trustBar": {
+      "text": "Built in Stockholm · GDPR-native · Works across Europe"
+    },
+    "dayWithKarl": {
+      "eyebrow": "A day with Karl",
+      "headline": "Here is what Karl and his team can do for a dental practice on a typical Tuesday.",
+      "subhead": "The dentist sees patients all day. She doesn't open a dashboard, write a social post, or check her reviews. Karl and his team handle everything around her business while she runs it.",
+      "cta": "See how your business looks online"
+    },
+    "dashboard": {
+      "headline": "Check in whenever you want.",
+      "subhead": "Your dashboard shows everything Karl and his team are doing — reviews, listings, social posts, ads, and messages. Log in any time, or just read Karl's weekly email summary.",
+      "loginLink": "Log in to your dashboard →",
+      "screenshotLabel": "Executive overview dashboard",
+      "screenshotAlt": "Vendasta Business App executive overview showing review summary, listing accuracy, and recent activity"
+    },
+    "capabilityExplorer": {
+      "eyebrow": "Karl's team",
+      "headline": "Eight specialists. One director. Zero effort from you.",
+      "subhead": "You talk to Karl. He coordinates everything. Click each role to see what that specialist handles.",
+      "karlsLabel": "Karl's"
+    },
+    "verticals": {
+      "headline": "Karl works for your industry."
+    },
+    "pricing": {
+      "headline": "Transparent pricing.",
+      "subhead": "Every plan includes Karl as your marketing director. Higher tiers give him a bigger team.",
+      "noContracts": "No contracts · No onboarding fees · Cancel anytime",
+      "recommended": "Recommended",
+      "perMonth": "/month"
+    },
+    "setup": {
+      "headline": "What happens when you sign up.",
+      "day1": {
+        "label": "Day 1",
+        "items": [
+          "Karl's receptionist is live — answering web chat, social messages, and WhatsApp",
+          "Karl's SEO analyst reviews your Google Business Profile and begins optimisation",
+          "Karl's listings coordinator submits your business to 40+ directories for sync"
+        ]
+      },
+      "week1": {
+        "label": "Week 1",
+        "items": [
+          "Karl's review specialist sends first review requests to recent customers",
+          "Karl's content creator publishes first social media posts to your channels",
+          "Your local SEO grid is set up — you can see where you rank"
+        ]
+      },
+      "ongoing": {
+        "label": "Ongoing",
+        "items": [
+          "Monthly report from Karl: what his team did, what changed, what's planned next",
+          "You can text Karl any time — changes, questions, requests",
+          "Every specialist runs continuously without you logging into anything"
+        ]
+      }
+    },
+    "finalCta": {
+      "headline": "You run the business.",
+      "headlineItalic": "Karl grows it.",
+      "subhead": "See how your business looks online — your reviews, listings, social media, and website — with a clear picture of what Karl and his team would do for you."
+    },
+    "chat": {
+      "msg1You": "We're closing at 3pm on Fridays now.",
+      "msg1Karl": "Done. I've had my listings coordinator update it on Google Maps, Apple Maps, Yelp, Jameda, and 37 other directories.",
+      "msg2You": "Did anyone call while I was with a patient?",
+      "msg2Karl": "Two calls. My receptionist handled both — one reschedule confirmed for Tuesday, and a new whitening enquiry booked for Thursday 3pm. Details in your inbox.",
+      "msg3You": "Perfect, thank you.",
+      "header": "Karl",
+      "today": "Today"
+    }
+  },
+  "PricingPage": {
+    "headline": "Transparent pricing.",
+    "subhead": "Three plans. One agent. No surprises.",
+    "recommended": "Recommended",
+    "perMonth": "/month",
+    "noContracts": "No contracts · No onboarding fees · Cancel anytime",
+    "cta": "See how your business looks online",
+    "alaCarteHeadline": "À la carte add-ons.",
+    "alaCarteSubhead": "Add individual capabilities to any plan. Pay only for what you need.",
+    "alaCartePerMonth": "/month",
+    "includedIn": "Included in",
+    "faqHeadline": "Common questions.",
+    "faq": [
+      {
+        "q": "Do I have to sign a contract?",
+        "a": "No. Month-to-month. Cancel anytime with a single email."
+      },
+      {
+        "q": "Is there an onboarding fee?",
+        "a": "No. Zero. We connect your accounts on Day 1 and Karl starts immediately."
+      },
+      {
+        "q": "When will I see results?",
+        "a": "Within the first week. Your AI receptionist is live on Day 1. First review requests go out in the first 3–7 days. Social posts start Week 1."
+      },
+      {
+        "q": "Does Karl work for my industry?",
+        "a": "If your customers leave reviews and search for you locally, yes. We focus on healthcare, professional services, home and trade, and automotive."
+      },
+      {
+        "q": "Is my data safe under GDPR?",
+        "a": "Karl is GDPR-native. Built in Stockholm, operating under European data law. Your data stays in the EU."
+      },
+      {
+        "q": "What languages does Karl support?",
+        "a": "English and German at launch. Dutch and Swedish are in development."
+      },
+      {
+        "q": "Can I upgrade or downgrade?",
+        "a": "Yes, anytime. Contact us and we'll change your plan effective the following month."
+      }
+    ],
+    "finalCta": {
+      "headline": "Ready to see how your business looks online?",
+      "subhead": "Get your free assessment — no credit card, no commitment."
+    }
+  },
+  "HealthCarePage": {
+    "headline": "You treat patients.",
+    "headlineItalic": "Karl fills your schedule.",
+    "subhead": "Your patients check Google, Jameda, and Trustpilot before booking. Karl manages your reputation across every platform, answers enquiries around the clock, and fills your schedule — without you lifting a finger.",
+    "subverticalsLabel": "We work with",
+    "subverticals": ["Dental practices", "Physiotherapy clinics", "Veterinary practices", "Pet care services"],
+    "capabilitiesHeadline": "What Karl does for healthcare practices.",
+    "dayHeadline": "Here is what Karl does for a dental practice on a typical Tuesday.",
+    "daySubhead": "The dentist sees patients all day. Karl handles everything else.",
+    "priorityCapabilities": ["Reviews", "AI Receptionist", "Local SEO", "Listings", "Social media"]
+  },
+  "ProfessionalServicesPage": {
+    "headline": "You advise clients.",
+    "headlineItalic": "Karl finds new ones.",
+    "subhead": "Your reputation is built on results. Karl makes sure prospects can find you, read your reviews, and reach you — before they ever call a competitor.",
+    "subverticalsLabel": "We work with",
+    "subverticals": ["Accountants", "Law firms", "Estate agents"],
+    "capabilitiesHeadline": "What Karl does for professional services firms.",
+    "dayHeadline": "Here is what Karl does for an accounting practice on a typical day.",
+    "daySubhead": "The accountant advises clients all day. Karl handles the digital presence.",
+    "priorityCapabilities": ["Local SEO", "Reviews", "Listings", "Campaigns", "Social media"]
+  },
+  "HomeServicesPage": {
+    "headline": "You fix the pipes.",
+    "headlineItalic": "Karl fills your calendar.",
+    "subhead": "You're on the job — you can't always pick up the phone. Karl answers calls and messages, requests reviews after each job, and makes sure you show up when someone searches for a plumber nearby.",
+    "subverticalsLabel": "We work with",
+    "subverticals": ["Plumbers", "Electricians", "Builders", "Cleaning companies"],
+    "capabilitiesHeadline": "What Karl does for home and trade businesses.",
+    "dayHeadline": "Here is what Karl does for a plumbing business on a typical day.",
+    "daySubhead": "The plumber is on the job. Karl handles enquiries, reviews, and visibility.",
+    "priorityCapabilities": ["AI Receptionist", "Reviews", "Local SEO", "Listings", "Google Ads"]
+  },
+  "AutomotivePage": {
+    "headline": "You teach them to drive.",
+    "headlineItalic": "Karl brings them to your door.",
+    "subhead": "In driving schools, garages, and dealerships, reviews and local search rank determine whether the phone rings. Karl manages every review, keeps your listing accurate, and makes sure you appear when someone searches nearby.",
+    "subverticalsLabel": "We work with",
+    "subverticals": ["Driving schools", "Garages and workshops", "Car dealerships"],
+    "capabilitiesHeadline": "What Karl does for automotive businesses.",
+    "dayHeadline": "Here is what Karl does for a driving school on a typical day.",
+    "daySubhead": "The instructor is on the road. Karl handles everything around the business.",
+    "priorityCapabilities": ["Reviews", "Local SEO", "Listings", "AI Receptionist", "Google Ads"]
+  },
+  "ReportPage": {
+    "headline": "See how your business looks online.",
+    "subhead": "Enter your business below and we'll send you a free report — your reviews across 20+ sites, listings on 40+ directories, social presence, and website performance.",
+    "formLabels": {
+      "businessName": "Business name",
+      "businessNamePlaceholder": "e.g. Zahnarztpraxis Dr. Schäfer",
+      "website": "Website (optional)",
+      "websitePlaceholder": "https://",
+      "email": "Email address",
+      "emailPlaceholder": "you@yourbusiness.com",
+      "phone": "Phone (optional)",
+      "phonePlaceholder": "+49 30 ...",
+      "country": "Country",
+      "countryOptions": {
+        "de": "Germany",
+        "gb": "United Kingdom",
+        "nl": "Netherlands",
+        "se": "Sweden",
+        "other": "Other"
+      }
+    },
+    "gdprText": "I agree to receive my free business report and occasional updates from Karl. I can unsubscribe at any time.",
+    "submitButton": "Send me my report →",
+    "whatYouGet": {
+      "headline": "What you'll receive.",
+      "items": [
+        "Your review count and average rating across 20+ platforms",
+        "Listing accuracy across 40+ directories — errors flagged",
+        "Your social media presence and posting frequency",
+        "Website performance and local SEO health",
+        "A clear comparison against your local competitors"
+      ]
+    },
+    "timing": "We'll send your report within 24 hours. That's it.",
+    "successHeadline": "Your report is on its way.",
+    "successSubhead": "We'll send it to your email within 24 hours. In the meantime, if you have questions, reply to the confirmation email."
+  },
+  "Metadata": {
+    "home": {
+      "title": "Karl — Your AI Marketing Director for European Businesses",
+      "description": "Karl manages your reviews, listings, local SEO, AI receptionist, social media, and Google Ads. More customers. Zero effort. From €299/month. No contracts."
+    },
+    "pricing": {
+      "title": "Pricing — Karl",
+      "description": "Three transparent plans from €299/month. No onboarding fees, no contracts. Cancel anytime. See exactly what's included."
+    },
+    "healthCare": {
+      "title": "Marketing for Healthcare Practices — Karl",
+      "description": "Karl fills your appointment book. Review management on Jameda, Google, and Trustpilot. AI receptionist. Local SEO. From €299/month."
+    },
+    "professionalServices": {
+      "title": "Marketing for Professional Services — Karl",
+      "description": "Karl finds new clients for accountants, law firms, and estate agents. Reviews, local SEO, and campaigns — managed for you. From €299/month."
+    },
+    "homeServices": {
+      "title": "Marketing for Home and Trade Businesses — Karl",
+      "description": "Karl fills your calendar. AI receptionist answers calls when you're on the job. Reviews, listings, local SEO. From €299/month."
+    },
+    "automotive": {
+      "title": "Marketing for Automotive Businesses — Karl",
+      "description": "Karl brings customers to your garage, driving school, or dealership. Reviews, local SEO, and listings managed for you. From €299/month."
+    },
+    "report": {
+      "title": "Free Business Report — Karl",
+      "description": "See how your business looks online in 24 hours. Reviews, listings, social media, and website — all in one clear report. No credit card needed."
+    }
+  }
+}
