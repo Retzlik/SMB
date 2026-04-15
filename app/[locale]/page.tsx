@@ -170,13 +170,14 @@ export default async function HomePage({ params }: Props) {
         </div>
       </section>
 
-      {/* ── TRUST BAR ── */}
+      {/* ── PLATFORM STRIP ── */}
       <div
         style={{
           borderTop: `1px solid ${C.wg}`,
           borderBottom: `1px solid ${C.wg}`,
           background: C.st,
-          padding: '16px 24px',
+          padding: '14px 24px',
+          overflow: 'hidden',
         }}
       >
         <div
@@ -186,33 +187,43 @@ export default async function HomePage({ params }: Props) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: 28,
+            gap: 0,
             flexWrap: 'wrap',
           }}
         >
-          <span style={{ fontFamily: sn, fontSize: 12, color: C.mid }}>
-            {t('trustBar.text')}
+          <span style={{ fontFamily: sn, fontSize: 11, color: C.mid, paddingRight: 20, whiteSpace: 'nowrap' }}>
+            Keeps you visible on
           </span>
-          <div
-            style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}
-            aria-label="Platform integrations"
-          >
-            {['Google', 'WhatsApp', 'Facebook', 'Trustpilot', 'Instagram'].map((n) => (
+          {[
+            'Google Business',
+            'Apple Maps',
+            'Trustpilot',
+            'Facebook',
+            'Instagram',
+            'Yelp',
+            'Jameda',
+            'WhatsApp',
+            'Google Ads',
+            '40+ more',
+          ].map((name, i, arr) => (
+            <span key={name} style={{ display: 'flex', alignItems: 'center' }}>
               <span
-                key={n}
                 style={{
                   fontFamily: sn,
-                  fontSize: 10,
+                  fontSize: 11,
                   fontWeight: 500,
                   color: C.brd,
-                  letterSpacing: '0.04em',
-                  textTransform: 'uppercase',
+                  whiteSpace: 'nowrap',
+                  padding: '2px 0',
                 }}
               >
-                {n}
+                {name}
               </span>
-            ))}
-          </div>
+              {i < arr.length - 1 && (
+                <span style={{ color: C.wg, padding: '0 12px', fontSize: 14, lineHeight: 1 }}>·</span>
+              )}
+            </span>
+          ))}
         </div>
       </div>
 
@@ -415,10 +426,10 @@ export default async function HomePage({ params }: Props) {
             }}
           >
             {verticals.map((v, i) => (
-              <FadeIn key={v.slug} delay={0.05 * i}>
+              <FadeIn key={v.slug} delay={0.05 * i} style={{ height: '100%' }}>
                 <Link
                   href={v.href as Parameters<typeof Link>[0]['href']}
-                  style={{ display: 'block', textDecoration: 'none' }}
+                  style={{ display: 'block', textDecoration: 'none', height: '100%' }}
                 >
                   <VerticalCard vertical={v} />
                 </Link>

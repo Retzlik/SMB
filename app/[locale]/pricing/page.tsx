@@ -181,7 +181,14 @@ export default async function PricingPage({ params }: Props) {
                     ))}
                   </ul>
 
-                  <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
+                  <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap', alignItems: 'center' }}>
+                    {item.includedIn.length > 0 && (
+                      <span
+                        style={{ fontFamily: sn, fontSize: 9, color: C.mid, marginRight: 2 }}
+                      >
+                        {t('includedIn')}
+                      </span>
+                    )}
                     {item.includedIn.map((slug) => (
                       <span
                         key={slug}
@@ -200,13 +207,6 @@ export default async function PricingPage({ params }: Props) {
                         {slug}
                       </span>
                     ))}
-                    {item.includedIn.length > 0 && (
-                      <span
-                        style={{ fontFamily: sn, fontSize: 9, color: C.mid, alignSelf: 'center' }}
-                      >
-                        {t('includedIn')}
-                      </span>
-                    )}
                   </div>
                 </div>
               </FadeIn>
