@@ -28,7 +28,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: t('home.description'),
       url: '/',
       type: 'website',
+      images: [{ url: `/api/og?title=Your+AI+Marketing+Director`, width: 1200, height: 630 }],
     },
+    twitter: { card: 'summary_large_image', images: [`/api/og?title=Your+AI+Marketing+Director`] },
     alternates: { canonical: '/' },
   }
 }

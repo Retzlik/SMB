@@ -6,6 +6,7 @@ import PricingSection from '@/components/PricingSection'
 import FAQAccordion from '@/components/FAQAccordion'
 import CTASection from '@/components/CTASection'
 import FadeIn from '@/components/FadeIn'
+import JsonLd from '@/components/JsonLd'
 import { alaCarteItems } from '@/lib/data/pricing'
 import { C, se, sn } from '@/lib/design'
 
@@ -18,6 +19,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: t('pricing.title'),
     description: t('pricing.description'),
     alternates: { canonical: '/pricing' },
+    openGraph: {
+      images: [{ url: `/api/og?title=Simple%2C+transparent+pricing&sub=No+contracts+%C2%B7+No+onboarding+fees+%C2%B7+Cancel+anytime`, width: 1200, height: 630 }],
+    },
   }
 }
 
@@ -229,6 +233,18 @@ export default async function PricingPage({ params }: Props) {
         headline={t('finalCta.headline')}
         headlineItalic=""
         subhead={t('finalCta.subhead')}
+      />
+
+      <JsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: faqItems.map(({ q, a }) => ({
+            '@type': 'Question',
+            name: q,
+            acceptedAnswer: { '@type': 'Answer', text: a },
+          })),
+        }}
       />
 
       <Footer />

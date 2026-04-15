@@ -21,6 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: t('professionalServices.title'),
     description: t('professionalServices.description'),
     alternates: { canonical: '/professional-services' },
+    openGraph: { images: [{ url: `/api/og?title=Karl+for+Professional+Services&sub=Win+more+clients.+Rank+higher+locally.+Stay+visible+everywhere.`, width: 1200, height: 630 }] },
   }
 }
 

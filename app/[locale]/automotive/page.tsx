@@ -21,6 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: t('automotive.title'),
     description: t('automotive.description'),
     alternates: { canonical: '/automotive' },
+    openGraph: { images: [{ url: `/api/og?title=Karl+for+Automotive&sub=Own+local+search.+Build+trust.+Fill+your+workshop.`, width: 1200, height: 630 }] },
   }
 }
 

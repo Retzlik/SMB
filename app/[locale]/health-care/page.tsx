@@ -22,6 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: t('healthCare.title'),
     description: t('healthCare.description'),
     alternates: { canonical: '/health-care' },
+    openGraph: { images: [{ url: `/api/og?title=Karl+for+Healthcare&sub=Fill+your+schedule.+Manage+your+reputation.+Answer+every+enquiry.`, width: 1200, height: 630 }] },
   }
 }
 

@@ -21,6 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: t('homeServices.title'),
     description: t('homeServices.description'),
     alternates: { canonical: '/home-services' },
+    openGraph: { images: [{ url: `/api/og?title=Karl+for+Home+Services&sub=Never+miss+a+call.+Win+more+jobs.+Build+your+reputation.`, width: 1200, height: 630 }] },
   }
 }
 
