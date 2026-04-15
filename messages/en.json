@@ -29,7 +29,7 @@
     "copyright": "© 2026 Authoricy AB"
   },
   "ReportInput": {
-    "placeholder": "Enter your business name or website",
+    "placeholder": "e.g. yourshop.com",
     "button": "See your report →"
   },
   "HomePage": {
