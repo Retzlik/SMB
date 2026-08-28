@@ -1,0 +1,14 @@
+{
+  "fps": 30,
+  "seams": [
+    { "id": "hook→product", "cut": 2.6, "technique": "cut-the-curve LEFT (§3)",
+      "exit": { "selector": "#f1-w1", "axis": "x", "dir": -1 },
+      "entry": { "selector": "#console", "axis": "x", "dir": -1 } },
+    { "id": "product→payoff", "cut": 6.2, "technique": "cut-the-curve LEFT (§3)",
+      "exit": { "selector": "#console", "axis": "x", "dir": -1 },
+      "entry": { "selector": "#f3-w1", "axis": "x", "dir": -1 } },
+    { "id": "payoff→lockup (arrival)", "cut": 7.9, "technique": "inverse zoom-through (§2)",
+      "exit": { "selector": "#f3", "axis": "z", "dir": -1 },
+      "entry": { "selector": "#f4", "axis": "z", "dir": -1, "scanRoot": "#f4" } }
+  ]
+}

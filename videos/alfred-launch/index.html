@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="./vendor/gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "InterVar";
+        src: url("./assets/fonts/inter-latin-var.woff2") format("woff2");
+        font-weight: 100 900;
+        font-style: normal;
+        font-display: block;
+      }
+
+      :root {
+        --ink-deep: #0a0c11;
+        --ink: #111621;
+        --line: #212838;
+        --paper: #f5f7fb;
+        --muted: #949db0;
+        --accent: #ffb020;
+      }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+
+      html, body {
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: var(--ink-deep);
+      }
+
+      body {
+        font-family: "InterVar", "Inter", sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* Opaque stage ground — guards the mid-window cut (cut-the-curve §3). */
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        background: var(--ink-deep);
+      }
+
+      #stage {
+        position: absolute;
+        inset: 0;
+        width: 1920px;
+        height: 1080px;
+        background: var(--ink-deep);
+      }
+
+      #vignette {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          ellipse 68% 56% at 50% 44%,
+          var(--ink) 0%,
+          var(--ink-deep) 74%
+        );
+      }
+
+      .frame { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+      .row { display: flex; flex-direction: row; align-items: baseline; gap: 0.3em; }
+
+      .w {
+        display: inline-block;
+        font-size: inherit;
+        color: var(--paper);
+        font-weight: 800;
+        letter-spacing: -0.033em;
+        line-height: 1.08;
+        white-space: pre;
+      }
+
+      /* ── FRAME 1 — the hook ── */
+      #f1-head { position: absolute; left: 160px; top: 168px; width: 1600px; }
+      #f1-head .row { font-size: 130px; }
+
+      .chip {
+        position: absolute;
+        display: inline-block;
+        padding: 20px 34px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(17, 22, 33, 0.9);
+        color: var(--muted);
+        font-size: 34px;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        white-space: pre;
+      }
+
+      /* ── FRAME 2 — the product ── */
+      #f2 { display: flex; align-items: center; justify-content: center; }
+
+      #console {
+        width: 1180px;
+        padding: 40px 52px 46px;
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        background: linear-gradient(180deg, #141a26 0%, #0e131d 100%);
+      }
+
+      #console-head {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        padding-bottom: 30px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      #console-mark {
+        display: block;
+        width: 40px;
+        height: 40px;
+        border-radius: 11px;
+        background: var(--accent);
+      }
+
+      #console-name {
+        display: block;
+        color: var(--paper);
+        font-size: 40px;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+      }
+
+      #console-sub {
+        display: block;
+        margin-left: auto;
+        color: var(--muted);
+        font-size: 26px;
+        font-weight: 500;
+        letter-spacing: 0.02em;
+      }
+
+      .crow {
+        display: flex;
+        align-items: center;
+        gap: 22px;
+        height: 74px;
+        border-bottom: 1px solid rgba(33, 40, 56, 0.55);
+      }
+
+      .cdot {
+        display: block;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        background: #39425a;
+        flex: none;
+      }
+
+      .cname {
+        display: block;
+        color: var(--paper);
+        font-size: 34px;
+        font-weight: 600;
+        letter-spacing: -0.015em;
+      }
+
+      .cstat {
+        display: block;
+        margin-left: auto;
+        color: var(--accent);
+        font-size: 27px;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+      }
+
+      #console-foot {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding-top: 30px;
+      }
+
+      #foot-label {
+        display: block;
+        color: var(--paper);
+        font-size: 29px;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+      }
+
+      #foot-note {
+        display: block;
+        margin-left: auto;
+        color: var(--muted);
+        font-size: 25px;
+        font-weight: 500;
+      }
+
+      /* ── FRAME 3 — the payoff ── */
+      #f3-head { position: absolute; left: 160px; top: 400px; width: 1600px; }
+      #f3-head .row { font-size: 128px; }
+
+      /* ── FRAME 4 — the lockup ── */
+      #f4 { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+
+      #wordmark {
+        display: block;
+        color: var(--paper);
+        font-size: 240px;
+        font-weight: 900;
+        letter-spacing: -0.05em;
+        line-height: 1;
+      }
+
+      #rule {
+        display: block;
+        width: 190px;
+        height: 6px;
+        margin-top: 40px;
+        border-radius: 3px;
+        background: var(--accent);
+        transform-origin: center;
+      }
+
+      #tagline {
+        display: block;
+        margin-top: 38px;
+        color: var(--muted);
+        font-size: 29px;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        white-space: pre;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="10"
+      data-width="1920"
+      data-height="1080"
+    >
+      <div id="stage" class="clip" data-start="0" data-duration="10" data-track-index="1">
+        <div id="vignette"></div>
+
+        <!-- ══ FRAME 1 — hook ══ -->
+        <div class="frame" id="f1">
+          <div id="f1-head">
+            <div class="row">
+              <span class="w" id="f1-w1">Your</span>
+              <span class="w" id="f1-w2">brand</span>
+              <span class="w" id="f1-w3">answers</span>
+            </div>
+            <div class="row">
+              <span class="w" id="f1-w4">everywhere.</span>
+            </div>
+          </div>
+          <div id="f1-chips">
+            <span class="chip" id="chip-1" style="left: 205px; top: 648px">Search</span>
+            <span class="chip" id="chip-2" style="left: 470px; top: 742px">Maps</span>
+            <span class="chip" id="chip-3" style="left: 715px; top: 640px">Voice</span>
+            <span class="chip" id="chip-4" style="left: 940px; top: 758px">AI Assistants</span>
+            <span class="chip" id="chip-5" style="left: 1345px; top: 652px">Reviews</span>
+            <span class="chip" id="chip-6" style="left: 1575px; top: 772px">Social</span>
+          </div>
+        </div>
+
+        <!-- ══ FRAME 2 — the product ══ -->
+        <div class="frame" id="f2">
+          <div id="console">
+            <div id="console-head">
+              <span id="console-mark"></span>
+              <span id="console-name">Alfred</span>
+              <span id="console-sub">Presence sync</span>
+            </div>
+            <div class="crow"><span class="cdot" id="dot-1"></span><span class="cname">Search</span><span class="cstat" id="stat-1">Synced</span></div>
+            <div class="crow"><span class="cdot" id="dot-2"></span><span class="cname">Maps</span><span class="cstat" id="stat-2">Synced</span></div>
+            <div class="crow"><span class="cdot" id="dot-3"></span><span class="cname">Voice</span><span class="cstat" id="stat-3">Synced</span></div>
+            <div class="crow"><span class="cdot" id="dot-4"></span><span class="cname">AI Assistants</span><span class="cstat" id="stat-4">Synced</span></div>
+            <div class="crow"><span class="cdot" id="dot-5"></span><span class="cname">Reviews</span><span class="cstat" id="stat-5">Synced</span></div>
+            <div class="crow"><span class="cdot" id="dot-6"></span><span class="cname">Social</span><span class="cstat" id="stat-6">Synced</span></div>
+            <div id="console-foot">
+              <span id="foot-label">6 of 6 surfaces in sync</span>
+              <span id="foot-note">one source of truth</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ FRAME 3 — the payoff ══ -->
+        <div class="frame" id="f3">
+          <div id="f3-head">
+            <div class="row">
+              <span class="w" id="f3-w1">One</span>
+              <span class="w" id="f3-w2">brain</span>
+            </div>
+            <div class="row">
+              <span class="w" id="f3-w3">behind</span>
+              <span class="w" id="f3-w4">every</span>
+              <span class="w" id="f3-w5">answer.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ FRAME 4 — the lockup ══ -->
+        <div class="frame" id="f4">
+          <span id="wordmark">Alfred</span>
+          <span id="rule"></span>
+          <span id="tagline">Agentic marketing for multi-location brands</span>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // ── Vector ledger (ledger.json) ───────────────────────────────────
+      //   2.60  hook→product    x, dir −1 (LEFT)   cut-the-curve  §3
+      //   6.20  product→payoff  x, dir −1 (LEFT)   cut-the-curve  §3
+      //   7.90  payoff→lockup   z, dir −1 (PULL)   inverse zoom   §2
+      // The current is LEFT. The Z pull is the reserved ARRIVAL vector,
+      // spent once, on the brand landing.
+      const CUT1 = 2.6;
+      const CUT2 = 6.2;
+      const CUT3 = 7.9;
+
+      const TRAVEL = 230; // ~12% of a 1920 frame — partial travel
+      const DOT_ON = "#ffb020";
+
+      const CHIPS = ["#chip-1", "#chip-2", "#chip-3", "#chip-4", "#chip-5", "#chip-6"];
+      const CHIP_ROT = [-4, 3, -2, 5, -3, 2];
+      const F1_WORDS = ["#f1-w1", "#f1-w2", "#f1-w3", "#f1-w4"];
+      const F3_WORDS = ["#f3-w1", "#f3-w2", "#f3-w3", "#f3-w4", "#f3-w5"];
+
+      // ── Initial states, set IMMEDIATELY (not via tl.set at 0, which does
+      //    not render while the playhead sits exactly on frame 0). ────────
+      gsap.set(F1_WORDS, { autoAlpha: 0 });
+      CHIPS.forEach((sel, i) => gsap.set(sel, { autoAlpha: 0, rotation: CHIP_ROT[i] }));
+      gsap.set("#f2", { autoAlpha: 0 });
+      gsap.set("#f3", { autoAlpha: 0 });
+      gsap.set(F3_WORDS, { autoAlpha: 0 });
+      gsap.set("#f4", { autoAlpha: 0 });
+      gsap.set("#rule", { scaleX: 0 });
+      gsap.set("#tagline", { autoAlpha: 0 });
+      gsap.set(".cstat", { autoAlpha: 0 });
+      gsap.set("#console-foot", { autoAlpha: 0 });
+
+      const tl = gsap.timeline({ paused: true });
+
+      // ═══ FRAME 1 — waterfall ENTRY (§6): Y from below, binary opacity ═══
+      [
+        ["#f1-w1", 0.15, 70, 0.19, "power4.out"],
+        ["#f1-w2", 0.28, 44, 0.14, "power4.out"],
+        ["#f1-w3", 0.38, 50, 0.15, "power4.out"],
+        ["#f1-w4", 0.49, 76, 0.18, "expo.out"],
+      ].forEach(([sel, at, dy, dur, ease]) => {
+        tl.set(sel, { autoAlpha: 1 }, at);
+        tl.fromTo(sel, { y: dy }, { y: 0, duration: dur, ease: ease }, at);
+      });
+
+      // Chips scatter in — gaps shrink across the cascade (§6 choreography).
+      [0.7, 0.78, 0.85, 0.91, 0.96, 1.0].forEach((at, i) => {
+        tl.set(CHIPS[i], { autoAlpha: 1 }, at);
+        tl.fromTo(
+          CHIPS[i],
+          { y: 42, rotation: CHIP_ROT[i] },
+          { y: 0, rotation: CHIP_ROT[i], duration: 0.26, ease: "power4.out" },
+          at
+        );
+      });
+
+      // ── SEAM 1 @ 2.60 — cut-the-curve LEFT (§3) ──
+      // Exit power4.in / entry power4.out: the two halves of one power4.inOut,
+      // same distance and duration, so velocity matches exactly at the cut.
+      F1_WORDS.concat(CHIPS).forEach((sel, i) => {
+        const at = CUT1 - 0.34 + i * 0.018;
+        tl.to(sel, { x: -TRAVEL, duration: 0.34, ease: "power4.in" }, at);
+        tl.to(sel, { opacity: 0, duration: 0.18, ease: "none" }, at);
+      });
+      tl.set("#f1", { autoAlpha: 0 }, CUT1);
+
+      // ═══ FRAME 2 — the console carries the seam across the cut ═══
+      tl.set("#f2", { autoAlpha: 1 }, CUT1);
+      tl.fromTo(
+        "#console",
+        { x: TRAVEL, opacity: 0.35 },
+        { x: 0, opacity: 1, duration: 0.34, ease: "power4.out" },
+        CUT1
+      );
+
+      // Sustained route: SEQUENCED UI LIFE — the surfaces sync one by one.
+      [3.3, 3.62, 3.94, 4.26, 4.58, 4.9].forEach((at, i) => {
+        tl.to("#dot-" + (i + 1), { backgroundColor: DOT_ON, duration: 0.18, ease: "power2.out" }, at);
+        tl.set("#stat-" + (i + 1), { autoAlpha: 1 }, at);
+        tl.fromTo(
+          "#stat-" + (i + 1),
+          { x: 14 },
+          { x: 0, duration: 0.22, ease: "power4.out" },
+          at
+        );
+      });
+
+      // Staged payoff inside the frame — the count lands after the last row.
+      tl.set("#console-foot", { autoAlpha: 1 }, 5.25);
+      tl.fromTo("#console-foot", { y: 16 }, { y: 0, duration: 0.26, ease: "power4.out" }, 5.25);
+
+      // ── SEAM 2 @ 6.20 — cut-the-curve LEFT (§3) ──
+      tl.to("#console", { x: -TRAVEL, duration: 0.34, ease: "power4.in" }, CUT2 - 0.34);
+      tl.to("#console", { opacity: 0, duration: 0.18, ease: "none" }, CUT2 - 0.34);
+      tl.set("#f2", { autoAlpha: 0 }, CUT2);
+
+      // ═══ FRAME 3 — waterfall cut entry (§4): ignite at 0.35 mid-path ═══
+      tl.set("#f3", { autoAlpha: 1 }, CUT2);
+      let gap = 0.05;
+      let off = 0;
+      F3_WORDS.forEach((sel, i) => {
+        if (i > 0) { off += gap; gap *= 0.84; }
+        tl.set(sel, { autoAlpha: 1 }, CUT2 + off);
+        tl.fromTo(
+          sel,
+          { x: TRAVEL, opacity: 0.35 },
+          { x: 0, opacity: 1, duration: 0.3, ease: "power4.out" },
+          CUT2 + off
+        );
+      });
+
+      // The subject takes the accent, then the frame holds.
+      tl.to(["#f3-w1", "#f3-w2"], { color: DOT_ON, duration: 0.22, ease: "power2.out" }, 6.85);
+      // → stillness-before-climax 7.15 → 7.69 (0.54s), then the arrival seam.
+
+      // ── SEAM 3 @ 7.90 — INVERSE zoom-through (§2), the ARRIVAL ──
+      // Everything SHRINKS across the cut: exit 1→0.8, entry 1.25→1.
+      // Blur the wrapper, never children; opacity is always its own tween.
+      tl.to("#f3", { scale: 0.8, filter: "blur(10px)", duration: 0.21, ease: "power3.in" }, CUT3 - 0.21);
+      tl.to("#f3", { opacity: 0.15, duration: 0.21, ease: "none" }, CUT3 - 0.21);
+      tl.set("#f3", { autoAlpha: 0 }, CUT3);
+
+      // ═══ FRAME 4 — arrives OVERSIZED, retracts into the focal plane ═══
+      tl.set("#f4", { autoAlpha: 1, scale: 1.25, filter: "blur(10px)", opacity: 0.15 }, CUT3);
+      tl.to("#f4", { scale: 1, filter: "blur(0px)", duration: 0.5, ease: "expo.out" }, CUT3);
+      tl.to("#f4", { opacity: 1, duration: 0.5, ease: "expo.out" }, CUT3);
+      // Retraction settles at 8.40 — the staged entrances below start after
+      // it, so nothing grows-from-small inside the seam window (§2 signs).
+
+      tl.fromTo("#rule", { scaleX: 0 }, { scaleX: 1, duration: 0.34, ease: "power2.out" }, 8.6);
+
+      tl.set("#tagline", { autoAlpha: 1 }, 8.95);
+      tl.fromTo("#tagline", { y: 34 }, { y: 0, duration: 0.3, ease: "power4.out" }, 8.95);
+
+      tl.seek(0);
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

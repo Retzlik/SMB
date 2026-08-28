@@ -1,0 +1,62 @@
+{
+  "category": "kinetic-type",
+  "duration_s": 10,
+  "fps": 30,
+  "canvas": { "w": 1920, "h": 1080, "aspect": "16:9" },
+  "style": "Restrained enterprise-software confidence. Near-black stage, one cool accent, heavy tight-tracked Inter. Motion is the message: every seam is velocity-matched, nothing wobbles, the piece resolves onto a held brand card.",
+  "palette": ["#08090B", "#0E1014", "#F7F8FA", "#7C8593", "#4C6FFF"],
+  "font": "Inter (vendored variable woff2, latin subset)",
+  "export": "mp4",
+  "asset_needs": [],
+  "block": null,
+  "customize": {},
+  "notes": {
+    "brand": "PLACEHOLDER copy and palette. www.yext.com is blocked by this session's egress policy, so no real Yext logo, colors, or screenshots were fetched. Nothing here is presented as an official Yext asset.",
+    "current": "LEFT",
+    "transition_budget": "waterfall-cut (x2, ordinary seams) + inverse-zoom-through (x1, reserved for the ARRIVAL)"
+  },
+  "content": {
+    "scenes": [
+      {
+        "id": "beat-1",
+        "start": 0.0,
+        "end": 2.4,
+        "text": "Customers ask everywhere.",
+        "emphasis_words": ["everywhere."],
+        "emotion": "open, matter-of-fact — states the condition",
+        "motion": "waterfall ENTRY (§6): Y from below, binary opacity, gaps shrink across the cascade; final word split into 'every'/'where.' fragments to extend the climax. Sustained route: staged reveal — accent rule draws under the emphasis fragment at 1.10s.",
+        "beats": [0.15, 1.1, 2.06]
+      },
+      {
+        "id": "beat-2",
+        "start": 2.4,
+        "end": 4.8,
+        "text": "Search. Maps. Voice. AI.",
+        "emphasis_words": ["AI."],
+        "emotion": "accelerating — the surface area of the problem",
+        "motion": "waterfall CUT entry (§4): words ignite at 0.35 opacity mid-path from +230px, riding the LEFT current. Sustained route: sequenced UI life — the four channels light to accent in reading order.",
+        "beats": [2.4, 3.1, 3.4, 3.7, 4.0]
+      },
+      {
+        "id": "beat-3",
+        "start": 4.8,
+        "end": 7.1,
+        "text": "One source of truth.",
+        "emphasis_words": ["truth."],
+        "emotion": "resolution — the answer lands",
+        "motion": "waterfall CUT entry (§4) riding the LEFT current. Staged reveal: emphasis word takes accent + rule draw at 5.85. Then stillness-before-climax 6.25-6.89 (0.64s) before the arrival seam.",
+        "beats": [4.8, 5.55, 5.85, 6.25]
+      },
+      {
+        "id": "beat-4",
+        "start": 7.1,
+        "end": 10.0,
+        "text": "Yext",
+        "emphasis_words": [],
+        "emotion": "arrival — the held end card",
+        "motion": "INVERSE zoom-through (§2): wordmark arrives oversized at 1.25 and retracts into the focal plane (expo.out, 0.5s). Sign discipline honored — no grow-from-small entrance inside the seam window; rule and tagline are staged after the retraction settles at 7.60.",
+        "beats": [7.1, 7.85, 8.2]
+      }
+    ]
+  }
+}

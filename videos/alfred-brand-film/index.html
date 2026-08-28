@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="sv">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="./vendor/gsap.min.js"></script>
+    <style>
+      /* Alfred — self-hosted faces only. A CDN font request is a disclosure,
+         and packages/ui/src/no-remote-fonts.test.ts is the repo-wide law. */
+      @font-face {
+        font-family: 'Schibsted Grotesk';
+        font-style: normal; font-weight: 400 900; font-display: block;
+        src: url('./assets/fonts/schibsted-grotesk-latin.woff2') format('woff2');
+      }
+      @font-face {
+        font-family: 'Schibsted Grotesk';
+        font-style: normal; font-weight: 400 900; font-display: block;
+        src: url('./assets/fonts/schibsted-grotesk-latin-ext.woff2') format('woff2');
+        unicode-range: U+0100-02BA, U+1E00-1E9F, U+2020, U+20A0-20AB;
+      }
+      @font-face {
+        font-family: 'Cormorant Garamond';
+        font-style: normal; font-weight: 500 600; font-display: block;
+        src: url('./assets/fonts/cormorant-garamond-latin.woff2') format('woff2');
+      }
+
+      :root {
+        /* verbatim from apps/marketing/src/styles/global.css */
+        --paper: #f4f2ee;
+        --ink: #14161a;
+        --night: #101215;
+        --body: #3e444c;
+        --quiet: #5b6169;
+        --forest: #1f6146;
+        --tint: #edf1ee;
+        --cream: #f6f4ef;
+        --cream-2: #f2f0ec;
+        --sand: #dcd7ca;
+        --mute: #8a9096;
+        --soft: #5b6169;
+        --line: rgba(20, 22, 26, 0.14);
+        --line-soft: rgba(20, 22, 26, 0.08);
+        --line-dark: rgba(242, 240, 236, 0.16);
+      }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--paper); }
+      body { font-family: 'Schibsted Grotesk', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+
+      #root { position: relative; width: 1920px; height: 1080px; background: var(--paper); }
+      #stage { position: absolute; inset: 0; width: 1920px; height: 1080px; background: var(--paper); }
+
+      /* NIGHT ground for the problem scene — a full-bleed child, not a root fill. */
+      #night { position: absolute; inset: 0; background: var(--night); }
+
+      .scene { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+      /* 1320px container, the site's own measure, centred in 1920. */
+      .col {
+        position: absolute; left: 300px; top: 0;
+        width: 1320px; height: 100%;
+        display: flex; flex-direction: column; justify-content: center;
+      }
+      .col.narrow { width: 1180px; }
+
+      .kicker {
+        display: block;
+        font-size: 17px; font-weight: 600;
+        letter-spacing: 0.11em; text-transform: uppercase;
+        color: var(--quiet);
+        margin-bottom: 30px;
+      }
+      .kicker.on-night { color: var(--sand); }
+
+      h1 {
+        font-size: 104px; font-weight: 600;
+        letter-spacing: -0.038em; line-height: 0.96;
+        color: var(--ink);
+      }
+      h1.on-night { color: var(--cream); }
+      h1 .ln { display: block; }
+
+      .lede {
+        margin-top: 34px;
+        font-size: 26px; font-weight: 400; line-height: 1.5;
+        color: var(--body); max-width: 44ch;
+      }
+      .lede.on-night { color: #c3c7cc; }
+
+      /* ── the weave: six interlaced loops on twelve nodes ── */
+      #weave-wrap { position: absolute; right: 168px; top: 50%; width: 720px; height: 720px; margin-top: -360px; }
+      #weave { width: 100%; height: 100%; overflow: visible; }
+      .thread { fill: none; stroke: var(--ink); stroke-width: 1.5; opacity: 0.9; }
+      .thread.dim { stroke: var(--sand); }
+      .node { fill: var(--ink); }
+      .node.dim { fill: var(--sand); }
+      .node.lit { fill: var(--forest); }
+
+      /* ── capability rows ── */
+      #caps { position: absolute; left: 300px; top: 50%; width: 860px; margin-top: -168px; }
+      .cap { position: absolute; top: 0; left: 0; width: 100%; }
+      .cap-no {
+        display: block; font-size: 16px; font-weight: 600;
+        letter-spacing: 0.11em; color: var(--forest);
+        font-variant-numeric: tabular-nums; margin-bottom: 22px;
+      }
+      .cap-name {
+        display: block; font-size: 94px; font-weight: 600;
+        letter-spacing: -0.036em; line-height: 1; color: var(--ink);
+      }
+      .cap-effect {
+        display: block; margin-top: 24px;
+        font-size: 36px; font-weight: 400; line-height: 1.32; color: var(--body);
+        max-width: 22ch;
+      }
+
+      #caps-rule { position: absolute; left: 300px; top: 50%; width: 860px; height: 1px; background: var(--line); margin-top: -214px; transform-origin: left center; }
+
+      /* ── lockup ── */
+      #lockup { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+      #lock-mark { display: block; width: 190px; height: 191px; }
+      #lock-word {
+        display: block; margin-top: 40px;
+        font-family: 'Cormorant Garamond', Georgia, serif;
+        font-size: 92px; font-weight: 500;
+        letter-spacing: 0.17em; text-indent: 0.17em;
+        color: var(--ink); line-height: 1;
+      }
+      #lock-line {
+        display: block; margin-top: 34px;
+        font-size: 20px; font-weight: 500;
+        letter-spacing: 0.11em; text-transform: uppercase; color: var(--quiet);
+      }
+
+      /* a single hairline that spans the container — the site's own device */
+      .rule { position: absolute; left: 300px; width: 1320px; height: 1px; background: var(--line); transform-origin: left center; }
+      .rule.on-night { background: var(--line-dark); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="42.5"
+         data-width="1920" data-height="1080">
+      <div id="stage" class="clip" data-start="0" data-duration="42.5" data-track-index="1">
+
+        <div id="night"></div>
+
+        <!-- the weave carries every scene -->
+        <div id="weave-wrap">
+          <svg id="weave" viewBox="0 0 720 720" aria-hidden="true"></svg>
+        </div>
+
+        <!-- 01 the shift -->
+        <div class="scene" id="s1">
+          <div class="col narrow">
+            <span class="kicker" id="s1-k">Den nya synligheten</span>
+            <h1 id="s1-h"><span class="ln">Sökningen har</span><span class="ln">blivit ett samtal.</span></h1>
+          </div>
+          <div class="rule" id="s1-rule" style="top: 742px"></div>
+        </div>
+
+        <!-- 02 the stakes -->
+        <div class="scene" id="s2">
+          <div class="col narrow">
+            <span class="kicker" id="s2-k">Svaret</span>
+            <h1 id="s2-h"><span class="ln">Och svaret om dig</span><span class="ln">skrivs utan dig.</span></h1>
+            <p class="lede" id="s2-l">Assistenterna sammanfattar det de hittar. Är bilden ofullständig blir svaret det också.</p>
+          </div>
+        </div>
+
+        <!-- 03 the problem — the one night scene -->
+        <div class="scene" id="s3">
+          <div class="col narrow">
+            <span class="kicker on-night" id="s3-k">Problemet</span>
+            <h1 class="on-night" id="s3-h"><span class="ln">Sex verktyg.</span><span class="ln">Ingen helhet.</span></h1>
+            <p class="lede on-night" id="s3-l">Webb, karta, telefon, omdömen, annonser, kundregister. Var för sig. Ingen som ser helheten.</p>
+          </div>
+        </div>
+
+        <!-- 04 the platform -->
+        <div class="scene" id="s4">
+          <div class="col narrow">
+            <span class="kicker" id="s4-k">Plattformen</span>
+            <h1 id="s4-h"><span class="ln">Sex avdelningar.</span><span class="ln">En intelligens.</span></h1>
+            <p class="lede" id="s4-l">Egna AI-agenter driver arbetet varje vecka, och varje avdelning ser vad de andra gör.</p>
+          </div>
+        </div>
+
+        <!-- 05 capabilities -->
+        <div class="scene" id="s5">
+          <div id="caps-rule"></div>
+          <div id="caps">
+            <div class="cap" id="cap-1"><span class="cap-no">01</span><span class="cap-name">Webbplats</span><span class="cap-effect">En sida för varje sökning.</span></div>
+            <div class="cap" id="cap-2"><span class="cap-no">02</span><span class="cap-name">Synlighet</span><span class="cap-effect">Först i kartan. Först i AI-svaret.</span></div>
+            <div class="cap" id="cap-3"><span class="cap-no">03</span><span class="cap-name">Reception</span><span class="cap-effect">Varje samtal besvarat.</span></div>
+            <div class="cap" id="cap-4"><span class="cap-no">04</span><span class="cap-name">Rykte</span><span class="cap-effect">Omdömen som kommer in av sig själva.</span></div>
+            <div class="cap" id="cap-5"><span class="cap-no">05</span><span class="cap-name">Annonser</span><span class="cap-effect">Budget som följer efterfrågan.</span></div>
+            <div class="cap" id="cap-6"><span class="cap-no">06</span><span class="cap-name">Kampanjer</span><span class="cap-effect">Kunder som kommer tillbaka.</span></div>
+          </div>
+        </div>
+
+        <!-- 06 the compounding effect -->
+        <div class="scene" id="s6">
+          <div class="col narrow">
+            <span class="kicker" id="s6-k">Effekten</span>
+            <h1 id="s6-h"><span class="ln">Varje del gör</span><span class="ln">nästa starkare.</span></h1>
+          </div>
+        </div>
+
+        <!-- 07 lockup -->
+        <div class="scene" id="s7">
+          <div id="lockup">
+            <img id="lock-mark" src="./assets/brand/alfred-mark.png" alt="" />
+            <span id="lock-word">ALFRED</span>
+            <span id="lock-line">Enterprise-marknadsföring för lokala företag</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <script>
+      // ── Alfred's one easing curve, cubic-bezier(0.22, 1, 0.36, 1) ──
+      // global.css / README: a single curve governs the whole site. GSAP core
+      // has no CustomEase, so solve the bezier directly — exact, deterministic.
+      function cubicBezier(x1, y1, x2, y2) {
+        const cx = 3 * x1, bx = 3 * (x2 - x1) - cx, ax = 1 - cx - bx;
+        const cy = 3 * y1, by = 3 * (y2 - y1) - cy, ay = 1 - cy - by;
+        const fx = t => ((ax * t + bx) * t + cx) * t;
+        const dfx = t => (3 * ax * t + 2 * bx) * t + cx;
+        return function (p) {
+          if (p <= 0) return 0;
+          if (p >= 1) return 1;
+          let t = p;
+          for (let i = 0; i < 8; i++) {
+            const x = fx(t) - p, d = dfx(t);
+            if (Math.abs(x) < 1e-6) break;
+            if (Math.abs(d) < 1e-6) break;
+            t -= x / d;
+          }
+          t = Math.min(1, Math.max(0, t));
+          return ((ay * t + by) * t + cy) * t;
+        };
+      }
+      const ALFRED = cubicBezier(0.22, 1, 0.36, 1);
+
+      // ── build the weave: six loops rotated 30°, twelve nodes ──
+      // Deterministic geometry (Math.cos/sin only — no clocks, no random).
+      const NS = 'http://www.w3.org/2000/svg';
+      const svg = document.getElementById('weave');
+      const CX = 360, CY = 360, R = 268, RX = 132, RY = 262;
+      const threads = [];   // the ellipses — stroke/dash/opacity only
+      const movers = [];    // inner groups — the only things GSAP translates
+      for (let k = 0; k < 6; k++) {
+        // rot carries the rotation and is never touched by GSAP; mover carries
+        // the translation. Tweening x/y on the rotated node itself would
+        // rewrite its transform attribute and un-rotate the loop.
+        const rot = document.createElementNS(NS, 'g');
+        rot.setAttribute('transform', 'rotate(' + k * 30 + ' ' + CX + ' ' + CY + ')');
+        const mover = document.createElementNS(NS, 'g');
+        const p = document.createElementNS(NS, 'ellipse');
+        p.setAttribute('cx', CX); p.setAttribute('cy', CY);
+        p.setAttribute('rx', RX); p.setAttribute('ry', RY);
+        p.setAttribute('class', 'thread');
+        p.setAttribute('pathLength', '100');
+        mover.appendChild(p);
+        rot.appendChild(mover);
+        svg.appendChild(rot);
+        threads.push(p);
+        movers.push(mover);
+      }
+      const nodes = [];
+      for (let i = 0; i < 12; i++) {
+        const a = (-90 + i * 30) * Math.PI / 180;
+        const c = document.createElementNS(NS, 'circle');
+        c.setAttribute('cx', CX + R * Math.cos(a));
+        c.setAttribute('cy', CY + R * Math.sin(a));
+        c.setAttribute('r', 11);
+        c.setAttribute('class', 'node');
+        svg.appendChild(c);
+        nodes.push(c);
+      }
+
+      // ── initial states, set immediately so frame 0 renders correctly ──
+      const SCENES = ['#s1', '#s2', '#s3', '#s4', '#s5', '#s6', '#s7'];
+      gsap.set(SCENES, { autoAlpha: 0 });
+      gsap.set('#night', { autoAlpha: 0 });
+      gsap.set(threads, { strokeDasharray: 100, strokeDashoffset: 100, autoAlpha: 0 });
+      gsap.set(nodes, { autoAlpha: 0, scale: 0.9, transformOrigin: 'center' });
+      gsap.set('#weave-wrap', { autoAlpha: 0 });
+      gsap.set('.cap', { autoAlpha: 0 });
+      gsap.set('#caps-rule', { scaleX: 0 });
+      gsap.set('.rule', { scaleX: 0 });
+      gsap.set('#lock-mark', { autoAlpha: 0, scale: 0.96, transformOrigin: 'center' });
+      gsap.set(['#lock-word', '#lock-line'], { autoAlpha: 0 });
+
+      const tl = gsap.timeline({ paused: true });
+
+      // Alfred's film vocabulary: enter 0.7s, draw 1.2s, pop 0.55s.
+      // Nothing slides more than 18px; nothing scales more than 8%.
+      const RISE = 14;
+      function enter(sel, at, d) {
+        tl.set(sel, { autoAlpha: 1 }, at);
+        tl.fromTo(sel, { y: RISE }, { y: 0, duration: d || 0.7, ease: ALFRED }, at);
+      }
+      function sceneIn(sel, at) {
+        tl.to(sel, { autoAlpha: 1, duration: 0.5, ease: ALFRED }, at);
+      }
+      function sceneOut(sel, at) {
+        tl.to(sel, { autoAlpha: 0, duration: 0.45, ease: 'none' }, at);
+      }
+
+      tl.fromTo('#weave-wrap', { rotation: -7 },
+        { rotation: 7, duration: 42.5, ease: 'none', transformOrigin: 'center center' }, 0);
+
+      const S1 = 0.0, S2 = 5.5, S3 = 11.0, S4 = 17.0, S5 = 23.5, S6 = 35.5, S7 = 39.5;
+
+      // ═══ 01 — the shift ═══
+      sceneIn('#s1', S1 + 0.15);
+      enter('#s1-k', S1 + 0.35);
+      enter('#s1-h', S1 + 0.6, 0.85);
+      tl.to('#s1-rule', { scaleX: 1, duration: 1.2, ease: ALFRED }, S1 + 1.0);
+      // the weave arrives as one thread, faint
+      tl.to('#weave-wrap', { autoAlpha: 0.5, duration: 1.0, ease: ALFRED }, S1 + 0.9);
+      tl.to(threads[0], { autoAlpha: 1, duration: 0.3, ease: 'none' }, S1 + 0.9);
+      tl.to(threads[0], { strokeDashoffset: 0, duration: 1.6, ease: ALFRED }, S1 + 0.9);
+      sceneOut('#s1', S2 - 0.5);
+
+      // ═══ 02 — the stakes ═══
+      sceneIn('#s2', S2);
+      enter('#s2-k', S2 + 0.2);
+      enter('#s2-h', S2 + 0.4, 0.85);
+      enter('#s2-l', S2 + 0.85);
+      tl.to(threads[1], { autoAlpha: 1, duration: 0.3, ease: 'none' }, S2 + 0.5);
+      tl.to(threads[1], { strokeDashoffset: 0, duration: 1.6, ease: ALFRED }, S2 + 0.5);
+      sceneOut('#s2', S3 - 0.5);
+
+      // ═══ 03 — the problem (night) ═══
+      tl.to('#night', { autoAlpha: 1, duration: 0.55, ease: ALFRED }, S3 - 0.55);
+      tl.to(threads, { stroke: '#dcd7ca', duration: 0.4, ease: 'none' }, S3 - 0.4);
+      tl.to('#weave-wrap', { autoAlpha: 0.34, duration: 0.6, ease: ALFRED }, S3 - 0.4);
+      sceneIn('#s3', S3);
+      enter('#s3-k', S3 + 0.2);
+      enter('#s3-h', S3 + 0.4, 0.85);
+      enter('#s3-l', S3 + 0.9);
+      // the six threads exist, but scattered — none of them meet
+      threads.forEach((t, i) => {
+        tl.to(t, { autoAlpha: 1, duration: 0.3, ease: 'none' }, S3 + 1.1 + i * 0.11);
+        tl.to(t, { strokeDashoffset: 62, duration: 0.9, ease: ALFRED }, S3 + 1.1 + i * 0.11);
+        tl.to(movers[i], { x: (i % 2 ? 1 : -1) * (8 + i * 1.6), y: (i % 3 - 1) * 9, duration: 0.9, ease: ALFRED }, S3 + 1.1 + i * 0.11);
+      });
+      sceneOut('#s3', S4 - 0.55);
+
+      // ═══ 04 — the platform: the threads braid into the mark ═══
+      tl.to('#night', { autoAlpha: 0, duration: 0.6, ease: ALFRED }, S4 - 0.6);
+      tl.to(threads, { stroke: '#14161a', duration: 0.45, ease: 'none' }, S4 - 0.45);
+      sceneIn('#s4', S4);
+      enter('#s4-k', S4 + 0.2);
+      enter('#s4-h', S4 + 0.4, 0.85);
+      enter('#s4-l', S4 + 0.9);
+      tl.to('#weave-wrap', { autoAlpha: 1, duration: 0.9, ease: ALFRED }, S4 + 0.3);
+      // every thread completes and returns home — the weave closes
+      threads.forEach((t, i) => {
+        tl.to(t, { strokeDashoffset: 0, duration: 1.5, ease: ALFRED }, S4 + 0.5 + i * 0.13);
+        tl.to(movers[i], { x: 0, y: 0, duration: 1.5, ease: ALFRED }, S4 + 0.5 + i * 0.13);
+      });
+      nodes.forEach((n, i) => {
+        tl.to(n, { autoAlpha: 1, scale: 1, duration: 0.5, ease: ALFRED }, S4 + 1.5 + i * 0.055);
+      });
+      sceneOut('#s4', S5 - 0.5);
+
+      // ═══ 05 — six capabilities, each lighting its node ═══
+      sceneIn('#s5', S5);
+      tl.to('#caps-rule', { scaleX: 1, duration: 1.0, ease: ALFRED }, S5 + 0.1);
+      const CAP = 2.0;
+      for (let i = 0; i < 6; i++) {
+        const at = S5 + i * CAP;
+        const sel = '#cap-' + (i + 1);
+        tl.set(sel, { autoAlpha: 1 }, at);
+        tl.fromTo(sel, { y: RISE }, { y: 0, duration: 0.7, ease: ALFRED }, at);
+        if (i > 0) tl.to('#cap-' + i, { autoAlpha: 0, duration: 0.34, ease: 'none' }, at - 0.4);
+        // two nodes light per capability — six capabilities, twelve nodes
+        tl.to([nodes[i * 2], nodes[i * 2 + 1]], { fill: '#1f6146', duration: 0.45, ease: ALFRED }, at + 0.15);
+        tl.fromTo([nodes[i * 2], nodes[i * 2 + 1]], { scale: 1 }, { scale: 1.35, duration: 0.3, ease: ALFRED, yoyo: true, repeat: 1 }, at + 0.15);
+      }
+      tl.to('#cap-6', { autoAlpha: 0, duration: 0.4, ease: 'none' }, S6 - 0.5);
+      sceneOut('#s5', S6 - 0.5);
+
+      // ═══ 06 — the compounding effect ═══
+      sceneIn('#s6', S6);
+      enter('#s6-k', S6 + 0.2);
+      enter('#s6-h', S6 + 0.4, 0.85);
+      // the ring pulses once, in order — the loop, stated as motion not diagram
+      nodes.forEach((n, i) => {
+        tl.fromTo(n, { scale: 1 }, { scale: 1.45, duration: 0.26, ease: ALFRED, yoyo: true, repeat: 1 }, S6 + 0.9 + i * 0.085);
+      });
+      sceneOut('#s6', S7 - 0.5);
+
+      // ═══ 07 — the weave resolves into the real mark ═══
+      // weave-wrap centre is x=1392,y=540; the lockup mark's centre is
+      // x=960, y=447 — so it travels -432,-93 and shrinks to the mark's size.
+      tl.to('#weave-wrap', { x: -432, y: -93, scale: 0.34, duration: 1.15, ease: ALFRED }, S7 - 0.85);
+      tl.to('#weave-wrap', { autoAlpha: 0, duration: 0.5, ease: 'none' }, S7 - 0.35);
+      sceneIn('#s7', S7 - 0.35);
+      tl.to('#lock-mark', { autoAlpha: 1, scale: 1, duration: 0.9, ease: ALFRED }, S7 - 0.3);
+      enter('#lock-word', S7 + 0.45, 0.8);
+      enter('#lock-line', S7 + 0.95);
+
+      tl.seek(0);
+      window.__timelines['main'] = tl;
+    </script>
+  </body>
+</html>

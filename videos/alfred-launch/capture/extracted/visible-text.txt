@@ -1,0 +1,16 @@
+SOURCE: user brief (no-capture path). Not scraped from any site.
+
+Product name: Alfred
+Category: enterprise agentic marketing / digital-presence platform
+
+Positioning scaffold (category-level, public knowledge):
+Multi-location brands need to show up accurately across every surface a
+customer might ask on — search, maps, voice assistants, AI assistants,
+reviews, social. Keeping that presence consistent at scale requires a single
+structured source of truth behind every answer.
+
+Script (on-screen type only; no voice-over — signed out, no local TTS deps):
+  1. "Your brand answers everywhere."
+  2. [product] Alfred console — six channels syncing to one source
+  3. "One brain behind every answer."
+  4. Alfred — Agentic marketing for multi-location brands
