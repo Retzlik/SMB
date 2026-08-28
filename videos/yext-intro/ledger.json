@@ -1,0 +1,26 @@
+{
+  "fps": 30,
+  "seams": [
+    {
+      "id": "hook→channels",
+      "cut": 2.4,
+      "technique": "waterfall cut LEFT (§4)",
+      "exit": { "selector": "#b1-anchor", "axis": "x", "dir": -1 },
+      "entry": { "selector": "#b2-anchor", "axis": "x", "dir": -1 }
+    },
+    {
+      "id": "channels→truth",
+      "cut": 4.8,
+      "technique": "waterfall cut LEFT (§4)",
+      "exit": { "selector": "#b2-anchor", "axis": "x", "dir": -1 },
+      "entry": { "selector": "#b3-anchor", "axis": "x", "dir": -1 }
+    },
+    {
+      "id": "truth→lockup (arrival)",
+      "cut": 7.1,
+      "technique": "inverse zoom-through (§2)",
+      "exit": { "selector": "#beat-3", "axis": "z", "dir": -1 },
+      "entry": { "selector": "#beat-4", "axis": "z", "dir": -1, "scanRoot": "#beat-4" }
+    }
+  ]
+}

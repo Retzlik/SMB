@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="./vendor/gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "InterVar";
+        src: url("./assets/fonts/inter-latin-var.woff2") format("woff2");
+        font-weight: 100 900;
+        font-style: normal;
+        font-display: block;
+      }
+
+      :root {
+        --canvas-deep: #08090b;
+        --canvas: #0e1014;
+        --ink: #f7f8fa;
+        --ink-dim: #7c8593;
+        --accent: #4c6fff;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: var(--canvas-deep);
+      }
+
+      body {
+        font-family: "InterVar", "Inter", sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* Opaque stage ground — a mid-window cut opens a summed-opacity < 1
+         window that flashes white otherwise (cut-the-curve §3 / seam-craft). */
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        background: var(--canvas-deep);
+      }
+
+      #stage {
+        position: absolute;
+        inset: 0;
+        width: 1920px;
+        height: 1080px;
+        background: var(--canvas-deep);
+      }
+
+      /* Subtle depth so the near-black ground is not dead flat. Static. */
+      #vignette {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          ellipse 70% 55% at 50% 45%,
+          var(--canvas) 0%,
+          var(--canvas-deep) 72%
+        );
+      }
+
+      .beat {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        width: 100%;
+        height: 100%;
+        padding: 120px 160px;
+        gap: 10px;
+      }
+
+      .row {
+        display: flex;
+        flex-direction: row;
+        align-items: baseline;
+        gap: 0.28em;
+        width: 100%;
+      }
+
+      .w {
+        display: inline-block;
+        color: var(--ink);
+        font-weight: 800;
+        letter-spacing: -0.032em;
+        line-height: 1.06;
+        white-space: pre;
+      }
+
+      /* ── beat 1 ── */
+      #beat-1 .w {
+        font-size: 150px;
+      }
+
+      /* ── beat 2 ── */
+      #beat-2 {
+        justify-content: center;
+      }
+      #beat-2 .w {
+        font-size: 110px;
+      }
+
+      /* ── beat 3 ── */
+      #beat-3 .w {
+        font-size: 150px;
+      }
+
+      /* ── beat 4 (lockup) ── */
+      #beat-4 {
+        align-items: center;
+        justify-content: center;
+        gap: 0;
+      }
+      #wordmark {
+        display: block;
+        color: var(--ink);
+        font-size: 260px;
+        font-weight: 900;
+        letter-spacing: -0.045em;
+        line-height: 1;
+      }
+      #tagline {
+        display: block;
+        margin-top: 38px;
+        color: var(--ink-dim);
+        font-size: 30px;
+        font-weight: 500;
+        letter-spacing: 0.26em;
+        text-transform: uppercase;
+        white-space: pre;
+      }
+
+      /* Accent rules — drawn with scaleX from a left origin. */
+      .rule {
+        display: block;
+        height: 8px;
+        background: var(--accent);
+        transform-origin: left center;
+        border-radius: 4px;
+      }
+      #b1-rule {
+        width: 470px;
+        margin-top: 26px;
+      }
+      #b3-rule {
+        width: 330px;
+        margin-top: 26px;
+      }
+      #b4-rule {
+        width: 200px;
+        height: 6px;
+        margin-top: 44px;
+        transform-origin: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="10"
+      data-width="1920"
+      data-height="1080"
+    >
+      <div
+        id="stage"
+        class="clip"
+        data-start="0"
+        data-duration="10"
+        data-track-index="1"
+      >
+        <div id="vignette"></div>
+
+        <!-- ── BEAT 1 — hook (waterfall ENTRY, §6) ── -->
+        <div class="beat" id="beat-1">
+          <div class="row">
+            <span class="w" id="b1-anchor">Customers</span>
+            <span class="w" id="b1-w2">ask</span>
+          </div>
+          <div class="row">
+            <span class="w" id="b1-w3">every</span>
+            <span class="w" id="b1-w4">where.</span>
+          </div>
+          <span class="rule" id="b1-rule"></span>
+        </div>
+
+        <!-- ── BEAT 2 — the channels (waterfall CUT entry, §4) ── -->
+        <div class="beat" id="beat-2">
+          <div class="row">
+            <span class="w" id="b2-anchor">Search.</span>
+            <span class="w" id="b2-w2">Maps.</span>
+            <span class="w" id="b2-w3">Voice.</span>
+            <span class="w" id="b2-w4">AI.</span>
+          </div>
+        </div>
+
+        <!-- ── BEAT 3 — the punch (waterfall CUT entry, §4) ── -->
+        <div class="beat" id="beat-3">
+          <div class="row">
+            <span class="w" id="b3-anchor">One</span>
+            <span class="w" id="b3-w2">source</span>
+            <span class="w" id="b3-w3">of</span>
+          </div>
+          <div class="row">
+            <span class="w" id="b3-w4">truth.</span>
+          </div>
+          <span class="rule" id="b3-rule"></span>
+        </div>
+
+        <!-- ── BEAT 4 — the arrival (INVERSE zoom-through, §2) ── -->
+        <div class="beat" id="beat-4">
+          <span id="wordmark">Yext</span>
+          <span class="rule" id="b4-rule"></span>
+          <span id="tagline">The digital presence platform</span>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // ── Vector ledger (ledger.json) ────────────────────────────────────
+      //   2.40  hook→channels     x, dir −1 (LEFT)   waterfall cut  §4
+      //   4.80  channels→truth    x, dir −1 (LEFT)   waterfall cut  §4
+      //   7.10  truth→lockup      z, dir −1 (PULL)   inverse zoom   §2
+      // The current is LEFT; the Z pull is the reserved ARRIVAL vector.
+      const CUT1 = 2.4;
+      const CUT2 = 4.8;
+      const CUT3 = 7.1;
+
+      const TRAVEL = 230; // ~12% of a 1920 frame — partial travel
+      const ACCENT = "#4c6fff";
+
+      const tl = gsap.timeline({ paused: true });
+
+      // ── initial states, registered ON the timeline so seeking is exact ──
+      tl.set(["#beat-1 .w", "#b1-rule"], { autoAlpha: 0 }, 0);
+      tl.set("#b1-rule", { scaleX: 0 }, 0);
+      tl.set("#beat-2", { autoAlpha: 0 }, 0);
+      tl.set("#beat-3", { autoAlpha: 0 }, 0);
+      tl.set("#b3-rule", { scaleX: 0 }, 0);
+      tl.set("#beat-4", { autoAlpha: 0 }, 0);
+      tl.set("#b4-rule", { scaleX: 0 }, 0);
+      tl.set("#tagline", { autoAlpha: 0 }, 0);
+
+      // ═══ BEAT 1 — waterfall ENTRY (§6): Y from below, BINARY opacity ═══
+      // Gaps shrink across the cascade; the final fragment travels furthest.
+      const b1Entry = [
+        ["#b1-anchor", 0.15, 70, 0.19, "power4.out"], // anchor — heavy
+        ["#b1-w2", 0.29, 34, 0.12, "power4.out"], // light
+        ["#b1-w3", 0.38, 58, 0.16, "power4.out"], // normal
+        ["#b1-w4", 0.5, 76, 0.18, "expo.out"], // final fragment — climax
+      ];
+      b1Entry.forEach(([sel, at, dy, dur, ease]) => {
+        tl.set(sel, { autoAlpha: 1 }, at);
+        tl.fromTo(sel, { y: dy }, { y: 0, duration: dur, ease: ease }, at);
+      });
+
+      // Sustained route: STAGED REVEAL — the emphasis fragment is paid off.
+      tl.to("#b1-w4", { color: ACCENT, duration: 0.25, ease: "power2.out" }, 1.1);
+      tl.set("#b1-rule", { autoAlpha: 1 }, 1.1);
+      tl.fromTo(
+        "#b1-rule",
+        { scaleX: 0 },
+        { scaleX: 1, duration: 0.34, ease: "power2.out" },
+        1.1
+      );
+
+      // ── SEAM 1 @ 2.40 — waterfall cut LEFT (§4) ──
+      // Exit 0.34s power4.in, fade 0.18s starting with x, stagger +0.022s.
+      const b1Exit = ["#b1-anchor", "#b1-w2", "#b1-w3", "#b1-w4", "#b1-rule"];
+      b1Exit.forEach((sel, i) => {
+        const at = CUT1 - 0.34 + i * 0.022;
+        tl.to(sel, { x: -TRAVEL, duration: 0.34, ease: "power4.in" }, at);
+        tl.to(sel, { opacity: 0, duration: 0.18, ease: "none" }, at);
+      });
+      tl.set("#beat-1", { autoAlpha: 0 }, CUT1);
+
+      // ═══ BEAT 2 — waterfall CUT entry (§4): ignite at 0.35 mid-path ═══
+      tl.set("#beat-2", { autoAlpha: 1 }, CUT1);
+      const b2Words = ["#b2-anchor", "#b2-w2", "#b2-w3", "#b2-w4"];
+      let gap = 0.05;
+      let off = 0;
+      b2Words.forEach((sel, i) => {
+        if (i > 0) {
+          off += gap;
+          gap *= 0.84; // accelerating cascade
+        }
+        tl.fromTo(
+          sel,
+          { x: TRAVEL, opacity: 0.35 },
+          { x: 0, opacity: 1, duration: 0.3, ease: "power4.out" },
+          CUT1 + off
+        );
+      });
+
+      // Sustained route: SEQUENCED UI LIFE — the channels light in order.
+      [3.1, 3.4, 3.7, 4.0].forEach((at, i) => {
+        tl.to(b2Words[i], { color: ACCENT, duration: 0.2, ease: "power2.out" }, at);
+      });
+
+      // ── SEAM 2 @ 4.80 — waterfall cut LEFT (§4) ──
+      b2Words.forEach((sel, i) => {
+        const at = CUT2 - 0.34 + i * 0.022;
+        tl.to(sel, { x: -TRAVEL, duration: 0.34, ease: "power4.in" }, at);
+        tl.to(sel, { opacity: 0, duration: 0.18, ease: "none" }, at);
+      });
+      tl.set("#beat-2", { autoAlpha: 0 }, CUT2);
+
+      // ═══ BEAT 3 — waterfall CUT entry (§4) ═══
+      tl.set("#beat-3", { autoAlpha: 1 }, CUT2);
+      const b3Words = ["#b3-anchor", "#b3-w2", "#b3-w3", "#b3-w4"];
+      gap = 0.05;
+      off = 0;
+      b3Words.forEach((sel, i) => {
+        if (i > 0) {
+          off += gap;
+          gap *= 0.84;
+        }
+        tl.fromTo(
+          sel,
+          { x: TRAVEL, opacity: 0.35 },
+          { x: 0, opacity: 1, duration: 0.3, ease: "power4.out" },
+          CUT2 + off
+        );
+      });
+
+      // Staged reveal: the emphasis word takes the accent, then the rule draws.
+      tl.to("#b3-w4", { color: ACCENT, duration: 0.22, ease: "power2.out" }, 5.55);
+      tl.set("#b3-rule", { autoAlpha: 1 }, 5.85);
+      tl.fromTo(
+        "#b3-rule",
+        { scaleX: 0 },
+        { scaleX: 1, duration: 0.34, ease: "power2.out" },
+        5.85
+      );
+      // → stillness-before-climax 6.19 → 6.89 (0.70s), then the arrival seam.
+
+      // ── SEAM 3 @ 7.10 — INVERSE zoom-through (§2), the ARRIVAL ──
+      // Everything SHRINKS across the cut: exit 1→0.8, entry 1.25→1.
+      // Blur the wrapper, never children. Opacity is its own tween.
+      tl.to(
+        "#beat-3",
+        { scale: 0.8, filter: "blur(10px)", duration: 0.21, ease: "power3.in" },
+        CUT3 - 0.21
+      );
+      tl.to("#beat-3", { opacity: 0.15, duration: 0.21, ease: "none" }, CUT3 - 0.21);
+      tl.set("#beat-3", { autoAlpha: 0 }, CUT3);
+
+      // ═══ BEAT 4 — arrives OVERSIZED and retracts into the focal plane ═══
+      tl.set("#beat-4", { autoAlpha: 1, scale: 1.25, filter: "blur(10px)", opacity: 0.15 }, CUT3);
+      tl.to(
+        "#beat-4",
+        { scale: 1, filter: "blur(0px)", duration: 0.5, ease: "expo.out" },
+        CUT3
+      );
+      tl.to("#beat-4", { opacity: 1, duration: 0.5, ease: "expo.out" }, CUT3);
+      // Retraction settles at 7.60 — staged entrances start after it, so the
+      // seam window carries no sign-fighting grow-from-small motion (§2).
+
+      tl.set("#b4-rule", { autoAlpha: 1 }, 7.85);
+      tl.fromTo(
+        "#b4-rule",
+        { scaleX: 0 },
+        { scaleX: 1, duration: 0.34, ease: "power2.out" },
+        7.85
+      );
+
+      tl.set("#tagline", { autoAlpha: 1 }, 8.2);
+      tl.fromTo("#tagline", { y: 40 }, { y: 0, duration: 0.3, ease: "power4.out" }, 8.2);
+
+      tl.seek(0);
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

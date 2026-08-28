@@ -34,3 +34,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# hyperframes video projects
+videos/*/node_modules
+videos/*/.bin
+videos/*/.hyperframes
